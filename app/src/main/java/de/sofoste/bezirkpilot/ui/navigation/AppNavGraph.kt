@@ -22,7 +22,7 @@ fun AppNavGraph() {
 
     NavHost(
         navController = navController,
-        startDestination = Route.Splash.path,
+        startDestination = Route.Login.path,
     ) {
         composable(Route.Splash.path) {
             SplashScreen(

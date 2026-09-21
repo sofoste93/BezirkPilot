@@ -32,7 +32,7 @@ fun PlaceholderScreen(
                         contentPadding = PaddingValues(horizontal = 12.dp),
                         modifier = Modifier.padding(start = 8.dp),
                     ) {
-                        Text("Zurück")
+                        Text("Zur\u00FCck")
                     }
                 },
             )
@@ -51,7 +51,7 @@ fun PlaceholderScreen(
                 style = MaterialTheme.typography.headlineMedium,
             )
             Text(
-                text = "Dieser Bereich wird in der nächsten Etappe verbunden.",
+                text = "Dieser Bereich wird in der n\u00E4chsten Etappe verbunden.",
                 modifier = Modifier.padding(top = 12.dp),
             )
         }

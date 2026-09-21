@@ -32,7 +32,7 @@ fun SettingsScreen(
                         onClick = onBack,
                         modifier = Modifier.padding(start = 8.dp),
                     ) {
-                        Text("Zurück")
+                        Text("Zur\u00FCck")
                     }
                 },
             )
@@ -49,7 +49,7 @@ fun SettingsScreen(
                 onClick = onChangePassword,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text("Passwort ändern")
+                Text("Passwort \u00E4ndern")
             }
             OutlinedButton(
                 onClick = onAdminUsers,
@@ -62,7 +62,7 @@ fun SettingsScreen(
 }
 
 @Composable
-fun ChangePasswordScreen(onBack: () -> Unit) = PlaceholderScreen("Passwort ändern", onBack)
+fun ChangePasswordScreen(onBack: () -> Unit) = PlaceholderScreen("Passwort \u00E4ndern", onBack)
 
 @Composable
 fun AdminUsersScreen(onBack: () -> Unit) = PlaceholderScreen("Benutzer verwalten", onBack)

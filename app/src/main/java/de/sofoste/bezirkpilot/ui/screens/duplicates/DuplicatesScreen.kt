@@ -4,5 +4,5 @@ import androidx.compose.runtime.Composable
 import de.sofoste.bezirkpilot.ui.components.PlaceholderScreen
 
 @Composable
-fun DuplicatesScreen(onBack: () -> Unit) = PlaceholderScreen("Doppelte Straßen", onBack)
+fun DuplicatesScreen(onBack: () -> Unit) = PlaceholderScreen("Doppelte Stra\u00DFen", onBack)
 
