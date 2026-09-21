@@ -11,11 +11,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            BezirkPilotTheme {
-                AppNavGraph()
-            }
-        }
+        val container = (application as BezirkPilotApplication).container
+        setContent { BezirkPilotTheme { AppNavGraph(container) } }
     }
 }
-

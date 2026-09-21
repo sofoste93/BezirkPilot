@@ -2,43 +2,67 @@
 
 Private Android cockpit for the BezirkPilot API, built with Kotlin and Jetpack Compose.
 
-## Download
+## Public preview
 
-The current public preview is **BezirkPilot 0.1.0** for Android 8.0 or newer.
-It contains static UI only and does not connect to the production API.
+The current public release is **BezirkPilot 0.1.0** for Android 8.0 or newer. It is
+the static UI preview and remains available while the authenticated V1 workflow is
+validated against the local development API.
 
 - [Download the latest signed APK](https://github.com/sofoste93/BezirkPilot/releases/latest/download/bezirkpilot-latest.apk)
 - [Browse every release](https://github.com/sofoste93/BezirkPilot/releases)
 
-Only install APKs published in this official repository.
+## Current development workflow
 
-## Requirements
+The debug application now supports the complete first recipient workflow:
 
-- Android Studio with JDK 17
-- Android SDK 34
-- Minimum supported Android version: API 26
+- private login with a persisted Bearer token;
+- mandatory password change for temporary passwords;
+- live delivery districts from the API;
+- recipient search by name, street, locality, postal code or district;
+- recipient detail, editing and correction history;
+- new recipient creation;
+- duplicate street overview with direct links to recipient details;
+- loading, empty, validation, network and retry states.
 
-## Current orbit
+The app uses a small manual dependency container, Retrofit, OkHttp, DataStore and
+Compose ViewModels. API DTOs are mapped to domain models before they reach the UI.
 
-BezirkPilot 0.1.0 provides the static cockpit used to validate the visual direction
-before connecting authentication and business data:
+## Local API on a physical phone
 
-- high-contrast Material 3 theme with the yellow, black, white, red and gray palette;
-- direct Login to Home navigation for rapid phone testing;
-- readable login form with a restrained 1990s control-room style;
-- editable search field, delivery district shortcuts and primary recipient actions;
-- prepared Splash and secondary destinations for later authenticated flows.
+The debug build currently targets the development computer on the local network:
 
-No API request, token, password or local database is active in this version.
+```text
+http://192.168.178.30:7000/
+```
+
+Start the PHP API on all LAN interfaces from the backend repository:
+
+```powershell
+& 'C:\xampp\php\php.exe' -S 0.0.0.0:7000 -t public public/index.php
+```
+
+The Galaxy and the computer must be connected to the same local network. Cleartext
+HTTP is enabled only for the debug build. Override the debug URL without editing
+source code by setting this Gradle property:
+
+```properties
+BEZIRKPILOT_DEBUG_API_BASE_URL=http://192.168.x.x:7000/
+```
+
+The release build has a separate production URL and keeps cleartext HTTP disabled.
+No production release of the authenticated workflow is published until the local
+phone tests are complete.
 
 ## Build
+
+Requirements: Android Studio, JDK 17, Android SDK 34 and minimum Android API 26.
 
 ```powershell
 .\gradlew.bat :app:assembleDebug :app:lintDebug
 ```
 
-The debug application uses `de.sofoste.bezirkpilot.debug`, so it can coexist with
-the signed public application during development.
+The debug package is `de.sofoste.bezirkpilot.debug`, so it can coexist with the
+signed public application.
 
 ## Release integrity
 
