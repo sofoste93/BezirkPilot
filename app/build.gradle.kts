@@ -3,6 +3,17 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+val releaseStoreFile = providers.gradleProperty("BEZIRKPILOT_RELEASE_STORE_FILE").orNull
+val releaseStorePassword = providers.gradleProperty("BEZIRKPILOT_RELEASE_STORE_PASSWORD").orNull
+val releaseKeyAlias = providers.gradleProperty("BEZIRKPILOT_RELEASE_KEY_ALIAS").orNull
+val releaseKeyPassword = providers.gradleProperty("BEZIRKPILOT_RELEASE_KEY_PASSWORD").orNull
+val hasReleaseSigning = listOf(
+    releaseStoreFile,
+    releaseStorePassword,
+    releaseKeyAlias,
+    releaseKeyPassword,
+).all { !it.isNullOrBlank() }
+
 android {
     namespace = "de.sofoste.bezirkpilot"
     compileSdk = 34
@@ -17,9 +28,30 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        if (hasReleaseSigning) {
+            create("release") {
+                storeFile = file(releaseStoreFile!!)
+                storePassword = releaseStorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+            resValue("string", "app_name", "BezirkPilot Debug")
+        }
+
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            signingConfigs.findByName("release")?.let {
+                signingConfig = it
+            }
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
@@ -34,6 +66,7 @@ android {
 
     buildFeatures {
         compose = true
+        resValues = true
     }
 
     composeOptions {
